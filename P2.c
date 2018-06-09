@@ -2,7 +2,6 @@
 // 11721EEL003
 
 #include <stdio.h>
-#include <stdlib.h>
 
 void b_d (char b[]){
 	int x=0, d=0;
