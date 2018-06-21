@@ -3,120 +3,145 @@
 
 #include <stdio.h>
 
-void decimal_binario(int bin[], int dec){
-	int x = 0, n = 0, i = 0, aux, nbin[256], cont = 0, v_aux[256];
-	if(dec > 0){	
-		for (i = 0; dec > 0; i++) {
-        		bin[i] = dec % 2;
-         		dec /=  2;
-    		}	
-		for (int x = i - 1; x >= 0; x--) printf("%d", bin[x]);
-	}
-	else if(dec < 0){
-		aux = ((-dec) - 1);
-		for (i = 0; aux > 1; i++) {
-        		bin[i] = aux % 2;
-         		aux /=  2;
-         		if(aux == 1)
-         		{	
-			 	i++;
-         			bin[i] = aux;
-			}
-    		}
-    		i--;
-		for(x = 0; x < 32; x++){
-			if(x < (32 - (i+1))) nbin[x] = 0;
-			else {
-				bin[x] = bin[i];
-				i--;
-			}	
-		}
-		for(int w = 0; w < 32; w++){
-			if(nbin[w] == 0) v_aux[w] = 1;
-			else v_aux[w] = 0;
-		}
-		for(n = 0; n < 32; n++) printf("%d", v_aux[n]);
-	}
-}
+#include <stdio.h>
 
-int main(){
-	int op, n, nnot, nand, nor, nxor, nr, nl;
-	int bin[100], bin1[100], bin2[100], j, k;
-	printf("Leia o menu para escolher sua opcao:\n""\n1. NOT""\n2. AND""\n3. OR""\n4. XOR""\n5. RIGHT SHIFT""\n6. LEFT SHIFT""\n\nOpcao escolhida: ");
-	scanf("%d", &op);	
-	if(op==1){
-	printf("\nDigite um numero: ");
-	scanf("%d", &n);
-	getchar();
-	nnot = ~n;
-	printf("NOT %d (", n); decimal_binario(bin, n); printf(") :");
-	printf(" %d (", nnot); decimal_binario(bin1, nnot);
-	printf(")");
-	getchar();
+void printbits(unsigned int num, int l) 
+{
+	if(l != 0) 
+	{
+	printbits(num/2, l-1);
+	printf("%d", (num%2));
+	}	
 }
-	else if(op==2){
-		printf("\nDigite o primeiro numero: ");
-		scanf("%d", &j);
-		printf("Digite o segundo numero: ");
-		scanf("%d", &k);
-		getchar();
-		nand = j & k;
-		printf("%d (", j); decimal_binario(bin, j); printf(") AND ");
-		printf("%d (", k); decimal_binario(bin1, k); printf(") : ");
-		printf("%d (", nand); decimal_binario(bin2, nand); printf(")");
-		getchar();
-	}
-	else if(op==3){
-		printf("\nDigite o primeiro numero: ");
-		scanf("%d", &j);
-		printf("Digite o segundo numero: ");
-		scanf("%d", &k);
-		getchar();
-		nor = j | k;
-		printf("%d (", j); decimal_binario(bin, j); printf(") OR ");
-		printf("%d (", k); decimal_binario(bin1, k); printf(") : ");
-		printf("%d (", nor); decimal_binario(bin2, nor); printf(")");
-		getchar();
-	}
-	else if(op==4){
-		printf("\nDigite o primeiro numero: ");
-		scanf("%d", &j);
-		printf("Digite o segundo numero: ");
-		scanf("%d", &k);
-		getchar();
-		nxor = j ^ k;
-		printf("%d (", j); decimal_binario(bin, j); printf(") XOR ");
-		printf("%d (", k); decimal_binario(bin1, k); printf(") : ");
-		printf("%d (", nxor); decimal_binario(bin2, nxor); printf(")");
-		getchar();
-	}
-	else if(op==5){
-		printf("\nDigite o primeiro numero: ");
-		scanf("%d", &j);
-		printf("Digite o segundo numero: ");
-		scanf("%d", &k);
-		getchar();
-		nr = j >> k;
-		printf("%d (", j); decimal_binario(bin, j); printf(") >> ");
-		printf("%d (", k); decimal_binario(bin1, k); printf(") : ");
-		printf("%d (", nr); decimal_binario(bin2, nr); printf(")");
-		getchar();
-	}
-	else if(op==6){
-		printf("\nDigite o primeiro numero: ");
-		scanf("%d", &j);
-		printf("Digite o segundo numero: ");
-		scanf("%d", &k);
-		getchar();
-		nl = j << k;
-		printf("%d (", j); decimal_binario(bin, j); printf(") << ");
-		printf("%d (", k); decimal_binario(bin1, k); printf(") : ");
-		printf("%d (", nl); decimal_binario(bin2, nl); printf(")");
-		getchar();
-	}
-	else{
-		printf("\nDa proxima escolha uma opcao valida!!");
-		getchar();
+int main()
+{
+	int d, x, y, resultado;
+	printf("                          CALCULADORA DE BITWISE\n\n\n");
+	printf("1. NOT\n2. AND\n3. OR\n4. XOR\n5. Right Shift\n6. Left Shift");
+	printf("\n\nDigite uma opcao: ");
+	scanf("%d", &d);
+	getchar();
+	switch(d)
+	{
+		case 1:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\nNOT %d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			resultado=~x;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
+		case 2:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\n\nDigite outro numero: ");
+			scanf("%d", &y);
+			getchar();
+			printf("\n\n%d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			printf(" AND %d", y);
+			printf("(");
+			printbits(y, 32);
+			printf(")");
+			resultado=x&y;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
+		case 3:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\n\nDigite outro numero: ");
+			scanf("%d", &y);
+			getchar();
+			printf("\n\n%d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			printf(" OR %d", y);
+			printf("(");
+			printbits(y, 32);
+			printf(")");
+			resultado=x|y;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
+		case 4:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\n\nDigite outro numero: ");
+			scanf("%d", &y);
+			getchar();
+			printf("\n\n%d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			printf(" XOR %d", y);
+			printf("(");
+			printbits(y, 32);
+			printf(")");
+			resultado=x^y;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
+		case 5:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\n\nDigite outro numero: ");
+			scanf("%d", &y);
+			getchar();
+			printf("\n\n%d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			printf(" >> %d", y);
+			printf("(");
+			printbits(y, 32);
+			printf(")");
+			resultado=x>>y;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
+		case 6:
+			printf("\n\nDigite um numero: ");
+			scanf("%d", &x);
+			getchar();
+			printf("\n\nDigite outro numero: ");
+			scanf("%d", &y);
+			getchar();
+			printf("\n\n%d", x);
+			printf("(");
+			printbits(x, 32);
+			printf(")");
+			printf(" << %d", y);
+			printf("(");
+			printbits(y, 32);
+			printf(")");
+			resultado=x<<y;
+			printf(" : %d", resultado);
+			printf("(");
+			printbits(resultado, 32);
+			printf(")");
+			break;
 	}
 	return 0;
 }
