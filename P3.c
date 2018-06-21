@@ -3,8 +3,6 @@
 
 #include <stdio.h>
 
-#include <stdio.h>
-
 void printbits(unsigned int num, int l) 
 {
 	if(l != 0) 
