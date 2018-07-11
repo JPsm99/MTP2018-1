@@ -1,40 +1,29 @@
-//Jo„o Pedro Silva Milagre
+//Jo√£o Pedro Silva Milagre
 //11721EEL003
 
-#include <stdio.h>
+#include<stdio.h>
 
-int soma (int vet[])
-{
-    int i, x=0;
-    for(i=0;i<20;i++)
-    {
-        x = x + vet[i];
-    }
-    return x;
+int soma(int *ref, int *px) {
+	return (*px) + ((px == ref) ? 0 : soma(ref, px-1));
 }
 
-float media (int a, int b)
-{
-    float m = b/a;
-    return m;
-}
-
-void main()
-{
-    int i, a, vet[20];
-    float n;
-    printf("Informe a quantidade de valores que serao atribuidos(entre 5 e 20): ");
-	scanf("%d", &a);
-    for(i=0;i<20;i++)
-    {
-        vet[i]=0;
-    }
-    i=getchar();
-    printf("\nDigite os numeros: \n");
-    for(i=0;i<a;i++)
-    {
-        scanf("%d", &vet[i]);
-    }
-    n=media(a,soma(vet));
-    printf("%.2f", media(a,soma(vet)));
+int main(){
+	
+	int quant;
+	
+	scanf("%i", &quant);
+	getchar();
+	
+	int i, num[quant];
+	
+	for(i=0; i<quant; i++){
+		scanf("%i", &num[i]);
+		getchar();
+	}
+	
+	int *pprimeiro = num, *pultimo = num+quant-1;
+	
+	printf("\nmedia = %f\n", (float) soma(pprimeiro, pultimo)/quant);
+	
+	return 0;
 }
