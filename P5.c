@@ -3,35 +3,50 @@
 
 #include <stdio.h>
 
-int main(){
-	int *ps, cod[64], i, op;
-	char str[256], ax;
-	printf("Menu de opcoes:""\n\n1. Codificar""\n2. Descodificar""\n\nEscolha uma das opcoes: ");
-	scanf("%d", &op);
-	getchar();
-	if(op==1){
-		printf("\nDigite uma frase de ate 255 caracteres: ");
-		gets(str);
-		printf("\nA frase codificada sera: ");
-		for(i=0; str[i]!='\0'; i+=4){
-			ps = (int*)&str[i];
-			if(str[i+4]!='\0'){
-				printf("%d, ", *ps);
-			}
-			else{
-				printf("%d", *ps);
-			}
-		}
-		getchar();
+int main()
+{	char str[256];
+	char *p;
+	int i, cont, txt[256], opcao;
+	int *ps;
+	do{
+	do{printf("MENU: \n\nDigite 1 para criptografar \n\nDigite 2 para descriptografar \n\nDigite 3 para sair do programa \n\nEssa e a sua opcao: ");
+	scanf("%d", &opcao);
+	getchar();}while(opcao!=1 && opcao!=2 && opcao!=3);
+	i = 0;
+	switch(opcao)
+	{	case 1:
+			for(i=0; i<256; i++){ str[i] = '\0'; }
+			printf("Digite um parametro de textual: ");
+			fgets(str, 256, stdin);
+			for(cont=0; str[cont] != '\0'; cont++);	
+			ps = (int*)str;
+			printf("\nCriptografamos sua frase: \n");
+			for(i=0; i<cont; i++)	
+			{	if(*(ps+i) != 0 )
+				{	printf("%i ", *(ps+i));	}	} 
+			break;
+			
+		case 2:
+			printf("Nao se esqueca de quando encerrar sua sequencia, Digite enter 0 e precione enter novamente\n");
+			p = (char*)txt;
+			i=0; cont=0;
+			printf("Digite seus numeros: \n");
+			do
+			{	scanf("%d", &cont);
+	 			getchar();
+				txt[i] = cont;
+				i++;
+			}while(cont != 0);
+			p = (char*)&txt;
+			printf("\nSua frase descriptografada: \n");
+			for(i=0; i<sizeof(txt) && *(p+i) != 0; i++)
+			{	printf("%c", *(p+i));		}
+			break;
+
+		default:
+			break;
 	}
-	else if(op==2){
-		printf("\nDigite a sequencia numerica: ");
-		for(i=0; i<64; i++){
-			scanf("%d%c", &cod[i], &ax);
-			if(ax!=',')
-				break;
-		}
-		printf("\nA frase descodificada e: %s", &cod);
-	}
+	printf("\n\n");
+	}while(opcao != 3);
 	return 0;
 }
