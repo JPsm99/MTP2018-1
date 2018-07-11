@@ -1,21 +1,25 @@
 //João Pedro Silva Milagre
 //11721EEL003
 
-#include <stdio.h>
+//João Pedro Silva Milagre
+//11721EEL003
 
-int main (){
-	int r[256], c = 0, i, j;
-	char num[256];
-	printf("Digite o numero: ");
-	scanf("%s", &num);
-	for(i = 0; num[i] != '\0'; i++){
-		if(num[i] >= 48 && num[i] <= 57){
-			r[c] = num[i] - 48;
-			c++;
-		}
+#include<stdio.h>
+
+int main(){
+	
+	char numero[256];
+	scanf("%s", numero);
+	int i=0, cum=0;
+	
+	while(numero[i]!='\0')
+	{
+		if(numero[i]>=48&&numero[i]<=57)
+			cum=cum*10+numero[i]-48;
+		i++;
 	}
-	printf("\nResultado: ");
-	for(j = 0; j < c; j++)
-		printf("%d", r[j]);
+	
+	printf("%d", cum);
+	
 	return 0;
 }
