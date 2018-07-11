@@ -1,63 +1,91 @@
-//Jo„o Pedro Silva Milagre
+//Jo√£o Pedro Silva Milagre
 //11721EEL003
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-struct Dimensoes{
-    float largura, profundidade, altura;
-};
-struct Produto{
+typedef struct Dimensoes{
+    float largura;
+    float profundidade;
+    float altura;
+}Dimensoes;
+
+typedef struct Produto{
     char nome[64];
     float preco;
-    struct Dimensoes dimensoes;
-    int st;
-};
-void main (){
-    struct Produto prod[2];
-    prod[0].st=0, prod[1].st=0;
-    int a, b;
-    char l;
-    printf("                                                    Bem vindo!!\n\n");
-    menu:
-    printf("1 - Cadastro\n2 - Consulta\n3 - Sair\n");
-    printf("\nEscolha sua opcao: ");
-    scanf("%d", &a);
-    switch(a){
-    case 1:
-        printf("\n\nDigite a posicao(codigo) do produto: ");
-		scanf("%d",&b);
-        l=getchar();
-        printf("\nDigite o nome do produto: ");
-		scanf("%s",&(prod[b-1].nome));
-        printf("Digite o valor do produto: ");
-		scanf("%f",&(prod[b-1].preco));
-		printf("Digite a largura do produto: ");
-        scanf("%f",&(prod[b-1].dimensoes.largura));
-        printf("Digite a profundidade do produto: ");
-        scanf("%f",&(prod[b-1].dimensoes.profundidade));
-        printf("Digite a altura do produto: ");
-        scanf("%f",&(prod[b-1].dimensoes.altura));
-        printf("\nProduto %d cadastrado com sucesso\n\n\n",b);
-        prod[b-1].st++;
-        goto menu;
-        break;
-    case 2:
-        printf("\nDigite o codigo do produto cadastrado: ");
-		scanf("%d",&b);
-        if(prod[b-1].st==0){printf("Produto nao cadastrado!\n\n\n");}
-        else{
-        printf("\n\nProduto encontrado:\n");
-		printf("%s, ",prod[b-1].nome);
-        printf("R$ %.2f, ",(prod[b-1].preco));
-        printf("L: %.2fm x ",(prod[b-1].dimensoes.largura));
-        printf("P: %.2fm x ",(prod[b-1].dimensoes.profundidade));
-        printf("A: %.2fm\n\n\n",(prod[b-1].dimensoes.altura));
-        }
-        goto menu;
-        break;
-    case 3:
-    	return 0;
+    Dimensoes dimensoes;
+}Produto;
+
+void cadastra(Produto * p){
+    printf("\nDigite o nome do produto: ");
+    fgets(p->nome, 64, stdin);
+    p->nome[strlen(p->nome)-1] = '\0';
+    printf("\nDigite o preco do produto: ");
+    scanf("%f", &(p->preco));
+    getchar();
+    printf("\nDigite a largura do produto: ");
+    scanf("%f", &(p->dimensoes.largura));
+    getchar();
+    printf("\nDigite a profundidade do produto: ");
+    scanf("%f", &(p->dimensoes.profundidade));
+    getchar();
+    printf("\nDigite a altura do produto: ");
+    scanf("%f", &(p->dimensoes.altura));
+    getchar();
+}
+
+void consulta(Produto * p){
+    char c;
+    if(strlen(p->nome) == 0){
+        printf("\nSeu produto nao esta cadastrado!\n");
+        while((c=getchar()) != '\n');
+        return;
     }
+    printf("\n%s, R$ %.2f, L: %.2fm x P: %.2fm x A: %.2fm\n", p->nome, p->preco,(p->dimensoes.largura),(p->dimensoes.profundidade), (p->dimensoes.altura));
+    while((c=getchar())!='\n');
+}
+
+int main(){
+    int opt1=0, opt2=0;
+    Produto * produtos = calloc(2, sizeof(Produto));
+
+    char sub[2][16] = {"Cadastro", "Consulta"};
+    while(opt1 != 3){
+        printf("\nFavor escolher uma opcao!\n");
+        printf("\n1 - Cadastrar\n2 - Consulta\n3 - Sair\n> ");
+        scanf("%d", &opt1);
+        getchar();
+        opt2 = 0;
+        switch(opt1){
+            case 1: case 2:
+                while(opt2!=3){
+                    printf("\nRealizar %s\n", sub[opt1-1]);
+                    printf("\n1 - Produto 1\n2 - Produto 2\n3 - Voltar\n> ");
+                    scanf("%d", &opt2);
+                    getchar();
+                    switch(opt2){
+                        case 1: case 2:
+                            printf("\nProduto %d\n", opt2);
+                            if(opt1==1)
+                                cadastra(&produtos[opt2-1]);
+                            if(opt1==2)
+                                consulta(&produtos[opt2-1]);
+                            opt2=3;
+                            break;
+                        default:
+                            if(opt2!=3)
+                                printf("\nOpcao invalida!\n");
+                            break;
+                    }
+                }
+                break;
+            default:
+                if(opt1!=3)
+                    printf("\nOpcao invalida!\n");
+                break;
+        }
+    }
+    free(produtos);
+    return 0;
 }
