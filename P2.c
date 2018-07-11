@@ -1,97 +1,80 @@
 // João Pedro Silva MIlagre
 // 11721EEL003
 
-#include <stdio.h>
+#include<stdio.h>
 
-void b_d (char b[]){
-	int x=0, d=0;
-	while(b[x]) {
-		d = d*2 + (b[x]-'0');
-		x++;
+void bin(unsigned int num)
+{
+	int nb, i;
+	
+	for(nb = 0; num >= (1 << nb); nb++){}	
+	
+	char bits1[nb];
+	
+	for(i=0; i<nb; i++){
+		if(num%2==0)
+			bits1[i]=0;
+		else
+			bits1[i]=1;	
+		num=num/2;
 	}
-	printf ("\nNumero digitado em decimal: %d", d);
+	
+	for(i=nb-1; i>=0; i--)
+		printf("%i", bits1[i]);
 }
 
-void b_h (char b[]){
-	int i=0, d=0;
-	while(b[i]){
-		d = d*2 + (b[i]-'0');
-		i++;
+int main ()
+{
+	
+	char bits[256], comando;
+	int i=0;
+	unsigned int num=0;
+	
+	printf("Conversao de Bases, digite: \n1. Binario para Decimal;\n2. Binario para Hexadecimal;\n3. Hexadecimal para Decimal;\n4. Hexadecimal para Binario;");
+	printf("\n5. Decimal para Binario;\n6. Decimal para Hexadecimal;\n7. Octal para Decimal;\n8. Decimal para Octal.\n");
+	scanf("%c", &comando);	getchar();
+	
+	switch(comando)
+	{
+		case '1':
+			scanf("%s", bits); getchar();
+			for(i=0; bits[i] != '\0'; i++)
+				num = num*2 + (bits[i] - '0');	
+			printf("%d", num);
+			break;
+		case '2':
+			scanf("%s", bits); getchar();
+			for(i=0; bits[i] != '\0'; i++)
+				num = num*2 + (bits[i] - '0');	
+			printf("%X", num);
+			break;
+		case '3':
+			scanf("%X", &num); getchar();
+			printf("%d", num);
+			break;
+		case '4':
+			scanf("%X", &num); getchar();
+			bin(num);
+			break;
+		case '5':
+			scanf("%d", &num); getchar();
+			bin(num);
+			break;
+		case '6':
+			scanf("%d", &num); getchar();
+			printf("%X", num);
+			break;	
+		case '7':
+			scanf("%o", &num); getchar();
+			printf("%d", num);
+			break;
+		case '8':
+			scanf("%d", &num); getchar();
+			printf("%o", num);
+			break;
+		default:
+			printf("Opcao invalida");
 	}
-	printf ("\nNumero digitado em hexadecimal: %x", d);
-}
 
-int main (){
-	int o, d, H, h, oc, cont;
-	char b[256];
-	printf(	"Conversor de base numerica:"
-	"\n1) Binario p/ Decimal"
-	"\n2) Binario p/ Hexadecimal"
-	"\n3) Hexadecimal p/ Decimal"
-	"\n4) Hexadecimal p/ Binario"
-	"\n5) Decimal p/ Binario"
-	"\n6) Decimal p/ Hexadecimal"
-	"\n7) Octal p/ Decimal"
-	"\n8) Decimal p/ Octal\n"
-	"Escolha a opcao desejada: ");
-	scanf ("%d", &o); 
-	getchar();
-	if(o==1){
-		printf ("\nDigite o numero na base binaria: ");
-		scanf ("%s", &b);
-		getchar();
-		b_d (b);
-	}
-	else if(o==2){
-		printf ("\nDigite o numero na base binaria: ");
-		scanf ("%s", &b);
-		getchar();
-		b_h (b);
-	}
-	else if(o==3){
-		printf ("\nDigite o numero na base hexadecimal: ");
-		scanf ("%x", &H);
-		getchar();
-		printf ("\nO numero digitado em decimal: %d", H);
-	}
-	else if(o==4){
-		printf ("\nDigite o numero na base hexadecimal: ");
-		scanf ("%x", &H);
-		getchar();
-		printf ("\nNumero auxiliar: %d", H);
-		printf ("\n\nDigite o numero auxiliar printado acima: ");
-		scanf ("%d", &d);
-		getchar();
-		itoa (d,b,2);
-		printf ("\n%d em binario: %s\n", d,b);
-	}
-	else if(o==5){
-		printf ("\nDigite o numero na base decimal: ");
-		scanf ("%d", &d);
-		getchar();
-		itoa (d,b,2);
-		printf ("\n%d em binario: %s\n", d,b);
-	}
-	else if(o==6){
-		printf ("\nDigite o numero na base decimal:");
-		scanf ("%d", &d);
-		getchar();
-		printf ("\nO numero digitado em hexadecimal: %x", d);
-	}
-	else if(o==7){
-		printf ("\nDigite o numero na base octadecimal:");
-		scanf ("%o", &oc);
-		getchar();
-		printf ("\nO numero digitado em decimal: %d", oc);
-	}
-	else if(o == 8){ 
-		printf ("\nDigite o numero na base decimal:");
-		scanf ("%d", &d);
-		getchar();
-		printf ("\nO numero digitado em octadecimal: %o", d);
-	}
-	else{
-		printf ("\nOpcao invalida.");
-	}
 	return 0;
 }
