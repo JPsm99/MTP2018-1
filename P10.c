@@ -1,4 +1,4 @@
-//Jo„o Pedro Silva Milagre
+//Jo√£o Pedro Silva Milagre
 //11721EEL003
 
 #include<stdio.h>
@@ -28,11 +28,11 @@ int sizeofFile(char nomearquivo[NCHAR_NOME])
 	if (arquivo)
 	{
 		fseek(arquivo, 0, SEEK_END);
-		sof = ftell(arquivo); // retorna o valor atual do ponteiro de posicao no arquivo
+		sof = ftell(arquivo);
 		fclose(arquivo);
 	}else
 	{
-		fprintf(stderr, ">>> Arquivo nao encontrado!\n");
+		fprintf(stderr, "- Arquivo nao encontrado!\n");
 		sof = -1;
 	}
 	
@@ -109,15 +109,15 @@ void abrirArq(Produto *p, int *cont)
 				fread(&p[i].dimensoes.profundidade, sizeof(float), 1, arquivo);
 				fread(&p[i].dimensoes.altura, sizeof(float), 1, arquivo);	
 			}
-			printf("\nArquivo contem %d produto(s). Leitura realizada com sucesso!\n\n", *cont);
+			printf("\nArquivo contem %d produto(s). Leitura realizada!\n\n", *cont);
 		}
 		else {
-			fprintf(stderr, ">>> Problema de realocacao da memoria!\n\n");
+			fprintf(stderr, " - Problema de realocacao da memoria!\n\n");
 			cont = 0;
 		}
 	fclose(arquivo);
 	}else
-		fprintf(stderr, ">>> Carregamento nao efetuado!\n\n");	
+		fprintf(stderr, "- Carregamento nao efetuado!\n\n");	
 }
 
 void salvarArq(Produto *p, int cont)
@@ -139,10 +139,10 @@ void salvarArq(Produto *p, int cont)
 			fwrite(&p[i].dimensoes.profundidade, sizeof(float), 1, arq);
 			fwrite(&p[i].dimensoes.altura, sizeof(float), 1, arq);
 		}
-		printf("Produtos armazenados em disco com sucesso!\n\n");
+		printf("Produtos armazenados em disco!\n\n");
 		fclose(arq);
 	}else
-		printf("Erro: n„o foi possÌvel abrir o arquivo\n\n");
+		printf("Erro: n√£o foi poss√≠vel abrir o arquivo\n\n");
 }
 
 int main()
@@ -153,8 +153,8 @@ int main()
 	
 	do
 	{
-		printf("Produtos em memoria: %d\n\n1. Consultar\n2. Cadastrar novo\n3. Carregar de arquivo para memoria (sobrescreve memoria)"
-				"\n4. Salvar memoria em arquivo (sobrescreve arquivo)\n0. Encerra\n\nOpcao escolhida: ", cont);
+		printf("Produtos em memoria: %d\n\n1 - Consultar\n2 - Cadastrar novo\n3 - Carregar de arquivo para memoria (sobrescreve memoria)"
+				"\n4 - Salvar memoria em arquivo (sobrescreve arquivo)\n0 - Sair\n\nOpcao escolhida: ", cont);
 		scanf("%d", &op); getchar();
 
 		switch(op)
